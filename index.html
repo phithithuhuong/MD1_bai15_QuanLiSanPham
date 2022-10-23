@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h1 style="color: dodgerblue">Add New Product</h1>
+    <input style="height: 40px;width: 300px" type="text" id="add" placeholder="New product">
+    <button style="height: 40px" onclick="addProduct()">Add</button>
+    <h2 style="color: olivedrab">Display all products</h2>
+</div>
+<table border="1px" id="displayArea" style="width: 400px;height: 200px">
+
+</table>
+<div id="edit">
+
+</div>
+<script>
+    let listProduct = ['Sony Xperia', 'Samsung Galaxy', 'Nokia 6', 'Ip13 Promax', 'Nokia 1280', 'Oppo A71'];
+    displayAll()//gọi ra để hiển thị
+
+    function displayAll() {
+        let str = '<tr>\n' +
+            '<td>Product Name</td>\n' +
+            '<td></td>\n' +
+            '<td  style="color: #ff2828">' + listProduct.length + 'product</td>\n' +
+            '<tr/>';
+        for (let i = 0; i < listProduct.length; i++) {//thêm các sản phẩm vào trong
+            str += '<tr><td>' + listProduct[i] + '</td>' +
+                '<td><button onclick="showFormEdit(' + i + ')">Edit</button></td>' +
+                '<td><button onclick="deleteProduct(' + i + ')">Delete</button></td></tr>'
+
+        }
+        document.getElementById('displayArea').innerHTML = str
+    }
+
+    function addProduct() {
+        let producName = document.getElementById('add').value;
+        document.getElementById('add').value = '';
+        listProduct.push(producName);
+        console.log(listProduct);
+        displayAll();
+    }
+
+    function deleteProduct(inDex) {
+        listProduct.slice(inDex, 1);
+        displayAll();
+    }
+
+    function showFormEdit(inDex) {//hàm ô để sửa
+        let str = '';
+        str = '<input type="text" id="editProduct" value="' + listProduct[inDex] + '"><button onclick="saveProduct(' + inDex + ')">Save</button>';
+        document.getElementById('edit').innerHTML = str;
+    }
+
+    function saveProduct(inDex) {//hàm sửa
+        listProduct[inDex] = document.getElementById('editProduct').value;
+        document.getElementById('edit').innerHTML = '';
+        displayAll()//gọi ra để hiển thị danh sách
+    }
+</script>
+
+</body>
+</html>
